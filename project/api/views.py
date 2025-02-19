@@ -77,5 +77,5 @@ def stu_detail(request, pk):
         return JsonResponse(serializer.errors, status=400)
 
     elif request.method == 'DELETE':
-        stu.delete()
+        snippet.delete()
         return HttpResponse(status=204)
