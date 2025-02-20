@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Student
 
-class Stu_serializers(serializers.Serializer):
+"""class Stu_serializers(serializers.Serializer):
 
     id=serializers.IntegerField(read_only=True)
     stu_name=serializers.CharField(max_length=50)
@@ -21,4 +21,8 @@ class Stu_serializers(serializers.Serializer):
         instance.stu_city = validated_data.get('stu_city', instance.stu_city)
        
         instance.save()
-        return instance
+        return instance"""
+class Stu_serializers(serializers.ModelSerializer):
+    class Meta:
+        model= Student
+        fields=["stu_name","stu_email","stu_contat","stu_city"]
