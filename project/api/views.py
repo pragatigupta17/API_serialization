@@ -27,8 +27,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from .models import Student
 from .serializers import Stu_serializers
-
-@csrf_exempt
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+@api_view(['GET','POST'])
 def stu_list(request):
     """
     List all code snippets, or create a new snippet.
@@ -36,17 +37,20 @@ def stu_list(request):
     if request.method == 'GET':
         snippets = Student.objects.all()
         serializer = Stu_serializers(snippets, many=True)
-        return JsonResponse(serializer.data, safe=False)
+       # return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data, )
 
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = Stu_serializers(data=data)
+        #data = JSONParser().parse(request)
+        serializer = Stu_serializers(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
-   
-@csrf_exempt
+           # return JsonResponse(serializer.data, status=201)
+            #return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+    
+@api_view(['GET','PUT','PATCH','DELETE'])
 def stu_detail(request, pk):
     """
     Retrieve, update or delete a code snippet.
@@ -54,28 +58,35 @@ def stu_detail(request, pk):
     try:
         snippet = Student.objects.get(pk=pk)
     except Student.DoesNotExist:
-        return HttpResponse(status=404)
+       # return HttpResponse(status=404)
+        return Response(status=404)
 
     if request.method == 'GET':
         serializer = Stu_serializers(snippet)
-        return JsonResponse(serializer.data)
+       # return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
         serializer = Stu_serializers(snippet, data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+            #return JsonResponse(serializer.data)
+            return Response(serializer.data)
+       # return JsonResponse(serializer.errors, status=400)
+        return Response(serializer.errors, status=400)
 
     elif request.method == 'PATCH':
         data = JSONParser().parse(request)
         serializer = Stu_serializers(snippet, data=data,partial=True)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+            #return JsonResponse(serializer.data)
+            return Response(serializer.data)
+        #return JsonResponse(serializer.errors, status=400)
+        return Response(serializer.errors, status=400)
 
     elif request.method == 'DELETE':
         snippet.delete()
-        return HttpResponse(status=204)
+        #return HttpResponse(status=204)
+        return Response({'msg':'data deleted'},status=204)
