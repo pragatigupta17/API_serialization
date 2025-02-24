@@ -25,4 +25,4 @@ from .models import Student
 class Stu_serializers(serializers.ModelSerializer):
     class Meta:
         model= Student
-        fields=["stu_name","stu_email","stu_contat","stu_city"]
+        fields=["id","stu_name","stu_email","stu_contat","stu_city"]
