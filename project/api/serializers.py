@@ -22,6 +22,7 @@ from .models import Student
        
         instance.save()
         return instance"""
+
 class Stu_serializers(serializers.ModelSerializer):
     class Meta:
         model= Student
