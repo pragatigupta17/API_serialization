@@ -1,5 +1,9 @@
 from rest_framework import serializers
 from .models import Student
+from .models import Employ
+from .models import Client
+from .models import Teacher
+from .models import School
 
 """class Stu_serializers(serializers.Serializer):
 
@@ -23,7 +27,29 @@ from .models import Student
         instance.save()
         return instance"""
 
-class Stu_serializers(serializers.ModelSerializer):
+'''class Stu_serializers(serializers.ModelSerializer):
+    class Meta:
+        model= Student
+        fields=["id","stu_name","stu_email","stu_contat","stu_city"]'''
+#----------------------------------------------------------------------------------------------
+
+class Pragati_serializers(serializers.ModelSerializer):
     class Meta:
         model= Student
         fields=["id","stu_name","stu_email","stu_contat","stu_city"]
+class Sajal_serializers(serializers.ModelSerializer):
+    class Meta:
+        model= Employ
+        fields=["id","emp_name","emp_email","emp_contat","emp_city"]
+class Prabha_serializers(serializers.ModelSerializer):
+    class Meta:
+        model= Client
+        fields=["id","cnt_name","cnt_email","cnt_contat","cnt_city"]
+class Neeraj_serializers(serializers.ModelSerializer):
+    class Meta:
+        model= Teacher
+        fields=["id","tch_name","tch_email","tch_contat","tch_city"]
+class Aditi_serializers(serializers.ModelSerializer):
+    class Meta:
+        model= School
+        fields=["id","sch_name","sch_email","sch_contat","sch_city"]
